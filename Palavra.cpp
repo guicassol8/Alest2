@@ -14,4 +14,5 @@ Palavra::Palavra(string palavra, Palavra *next, Palavra *prev){
 		this->palavra = palavra;
 		this->next = next;
 		this->prev = prev;
+		quantPalavras = 1;
 }

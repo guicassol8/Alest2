@@ -83,6 +83,11 @@ void Pagina::addPalavraByIndex (string palavra, int index){
 		ptr = ptr->next;
 	}
 
+	if (ptr->prev->palavra == palavra){
+		ptr->prev->quantPalavras++;
+		return;
+	}
+
 	/*
 	Faz com que o ptr "pule" uma cara para frente, de maneira que o novo vai ser adicionado antes do ptr (no index desejado)\n
 	Fazendo todos os devidos ajutstes de ponteiros next e prev
@@ -107,7 +112,8 @@ string Pagina::imprimePalavras(){
 	while (ptr != trailer){
 		ss << "|";
 		ss << ptr->palavra << "|";
-		ss << endl;
+		ss << " Quantidade de Aparicoes: ";
+		ss << ptr->quantPalavras << endl;
 		ptr = ptr->next;
 	}
 	ss << endl;

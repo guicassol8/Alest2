@@ -1,8 +1,9 @@
 # Alest2
 
 Atualmente oque esta faltando eh:
-  Fazer com que pagina tenha uma funcao que conte quantas vezes uma palavra aparece
-  Criar a Classe Livro
-  Fazer alguma funcao que crie uma nova pagina a cada 2500 caracteres
-  Captar todas palavras minusculas (pesquisar no mano pt)
+  Classe Livro
+    Classe vai diferenciar pagina por pagina (a cada 2500 caracteres), criando uma linked list de paginas
+    Vai criar uma funcao que faz uma string que diz a aparicao te todas palavras por pagina
+    Identifica as Stopword
+    Transformar maisculas em minusculas
   Provavelmente tem mais coisa q eu to me esquecendo agora, vamos trabalhar!
