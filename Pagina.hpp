@@ -8,6 +8,9 @@
 using namespace std;
 
 class Pagina {
+	private:
+		int sortIndex(string palavra);
+		void addPalavraByIndex (string palavra, int index);
 	public:
 		Pagina *prox;
 		Palavra *header;
@@ -16,8 +19,6 @@ class Pagina {
 		int quantCaracteres;
 		Pagina ();
 		void addPalavra (string palavra);
-		int sortIndex(string palavra);
-		void addPalavraByIndex (string palavra, int index);
 		string imprimePalavras();
 };
 
