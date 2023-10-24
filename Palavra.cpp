@@ -16,3 +16,9 @@ Palavra::Palavra(string palavra, Palavra *next, Palavra *prev){
 		this->prev = prev;
 		quantPalavras = 1;
 }
+
+Palavra::~Palavra(){
+	#ifdef DEBUG
+	cout << "HAHA palhaco!" << endl;
+	#endif
+}

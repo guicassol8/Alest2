@@ -14,7 +14,7 @@ Palavra.o:	Palavra.cpp Palavra.hpp
 Pagina.o:	Pagina.cpp Pagina.hpp Palavra.hpp
 	        g++ ${CFLAGS} Pagina.cpp
 
-Livro.o:	Livro.cpp Livro.hpp
+Livro.o:	Livro.cpp Livro.hpp Pagina.hpp
 	        g++ ${CFLAGS} Livro.cpp
 
 LeitorArquivo.o:	LeitorArquivo.cpp LeitorArquivo.h

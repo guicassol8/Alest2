@@ -11,6 +11,7 @@ class Pagina {
 	private:
 		int sortIndex(string palavra);
 		void addPalavraByIndex (string palavra, int index);
+		int tamanhoVetor;
 	public:
 		Pagina *prox;
 		Palavra *header;
@@ -18,6 +19,8 @@ class Pagina {
 		int quantPalavras;
 		int quantCaracteres;
 		Pagina ();
+		Pagina(Pagina *p);
+		~Pagina ();
 		void addPalavra (string palavra);
 		string imprimePalavras();
 };

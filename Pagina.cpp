@@ -10,6 +10,34 @@ Pagina::Pagina (){
 		trailer = new Palavra("Trailer");
 		quantPalavras = 0;
 		quantCaracteres = 0;
+		tamanhoVetor = 0;
+}
+Pagina::Pagina(Pagina *p) {
+    prox = nullptr;
+    header = new Palavra("Header");
+    trailer = new Palavra("Trailer");
+    quantPalavras = 0;
+    quantCaracteres = 0;
+    tamanhoVetor = 0;
+
+    
+    Palavra *ptr = p->header->next;
+    while (ptr != p->trailer) {
+        addPalavra(ptr->palavra);
+        ptr = ptr->next;
+    }
+}
+
+
+//Destrutor da pagina, deleta todas palavras da pagina//
+Pagina::~Pagina (){
+        Palavra *ptr = header;
+        for(int i = 0; i < tamanhoVetor; i++){
+		    Palavra *aux = ptr->next;
+            delete ptr;
+            ptr = aux;
+        }
+        delete trailer;
 }
 
 /*
@@ -25,6 +53,7 @@ void Pagina::addPalavra (string palavra){
 			novo->prev = header;
 			novo->next = trailer;
 			quantPalavras++;
+			
 		}
 		else {
 		///Adiciona a palavra na lista de maneira ordenada atraves do indice
@@ -32,6 +61,7 @@ void Pagina::addPalavra (string palavra){
 			quantPalavras++;
 		}
 		quantCaracteres += palavra.length();
+		
 }
 
 /*
@@ -97,6 +127,7 @@ void Pagina::addPalavraByIndex (string palavra, int index){
 	novo->prev = ptr->prev;
 	novo->next = ptr;
 	ptr->prev = novo;
+	tamanhoVetor++;
 	#ifdef DEBUG
 	cerr << "palavra: " << ptr->palavra << endl;
 	#endif

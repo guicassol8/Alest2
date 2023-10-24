@@ -14,10 +14,11 @@ private:
     bool isSpecialChar(char c);
     int numCharac;
 public:
-    
+    LeitorArquivo();
     LeitorArquivo(string nome);
     string proximaPalavra();
     int getNumCharac();
+    void zeraNumCharac();
 };
 
 #endif

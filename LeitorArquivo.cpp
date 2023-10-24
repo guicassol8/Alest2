@@ -4,6 +4,10 @@
 #include "LeitorArquivo.h"
 using namespace std;
 
+LeitorArquivo::LeitorArquivo(){
+
+}
+
 bool LeitorArquivo::isSpecialChar(char c){
     return !std::isalpha(c);
 }
@@ -43,4 +47,8 @@ string LeitorArquivo::proximaPalavra(){
 
 int LeitorArquivo::getNumCharac(){
     return numCharac;
+}
+
+void LeitorArquivo::zeraNumCharac(){
+    numCharac = 0;
 }

@@ -11,7 +11,9 @@ class Palavra {
 		Palavra *prev;
 		string palavra;
 		int quantPalavras;
+		
 		Palavra (string palavra = "", Palavra *next = nullptr, Palavra *prev = nullptr);
+		~Palavra();
 };
 
 #endif
