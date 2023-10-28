@@ -14,7 +14,7 @@ bool LeitorArquivo::isSpecialChar(char c){
 
 LeitorArquivo::LeitorArquivo(string nome):file(nome){
     if(!file){
-        throw std::runtime_error("Could not open file: " + nome);
+        throw std::runtime_error("Nome para arquivo invalido: " + nome);
     }
     numCharac = 0;
 }
@@ -29,7 +29,6 @@ string LeitorArquivo::proximaPalavra(){
         if (std::isspace(c)) {
             if (!word.empty()) {
                 // end of a word, return it
-                numCharac++;
                 return word;
             }
             numCharac++;
@@ -38,7 +37,6 @@ string LeitorArquivo::proximaPalavra(){
             word += c;
             numCharac++;
         } else {
-            numCharac++;
         }
     }
     // end of file or error, return what has been read

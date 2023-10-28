@@ -15,10 +15,15 @@ Palavra::Palavra(string palavra, Palavra *next, Palavra *prev){
 		this->next = next;
 		this->prev = prev;
 		quantPalavras = 1;
+		pagina = 0;
 }
 
 Palavra::~Palavra(){
 	#ifdef DEBUG
-	cout << "HAHA palhaco!" << endl;
+		cout << palavra << endl;
 	#endif
+}
+
+void Palavra::setPagina(int pagina) {
+	this->pagina = pagina;
 }

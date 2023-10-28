@@ -1,20 +1,27 @@
 #include "Pagina.hpp"
 #include "LeitorArquivo.h"
+#include <cstdlib>
 
 class Livro{
     private:
       string titulo;
-      
-       
+      string stopWords;
+      string *vetStr; 
+      Pagina livroPagina;
+      Pagina Stopwords;
+      Pagina livroSemPagina;
+      int numPaginas;
     public:
-        Pagina *header;
-        Pagina *trailer;
-        Pagina *prox;
-        int numPaginas;
-        Livro(string t);
+        Livro();
         ~Livro();
-        bool LeituraLivro();
-        bool addPagina(Pagina pagina);
+        void  LeituraStopWord(string stopWords);
+        void LeituraLivro(string nomeArquivo);
+        void pedirLivro ();
+        int getNumPaginas();
+        void interface();
     
-
+        string ordenaNumero();
+        string opcoes();
+        void clearConsole();
+        void exibeIndiceAlfabetico();
 };

@@ -10,10 +10,12 @@ class Palavra {
 		Palavra *next;
 		Palavra *prev;
 		string palavra;
+		int pagina;
 		int quantPalavras;
 		
 		Palavra (string palavra = "", Palavra *next = nullptr, Palavra *prev = nullptr);
 		~Palavra();
+		void setPagina(int pagina);
 };
 
 #endif

@@ -5,32 +5,21 @@ Inicializa a pagina com o header e trailer do LinkedList de palavras
 Seta seu next para NULL, visto que pagina eh uma lista simplesmente ligada
 */
 Pagina::Pagina (){
-		prox = nullptr;
 		header = new Palavra("Header");
 		trailer = new Palavra("Trailer");
 		quantPalavras = 0;
 		quantCaracteres = 0;
-		tamanhoVetor = 0;
+		tamanhoVetor = 1;
+		numero = 0;
 }
-Pagina::Pagina(Pagina *p) {
-    prox = nullptr;
-    header = new Palavra("Header");
-    trailer = new Palavra("Trailer");
-    quantPalavras = 0;
-    quantCaracteres = 0;
-    tamanhoVetor = 0;
 
-    
-    Palavra *ptr = p->header->next;
-    while (ptr != p->trailer) {
-        addPalavra(ptr->palavra);
-        ptr = ptr->next;
-    }
-}
 
 
 //Destrutor da pagina, deleta todas palavras da pagina//
 Pagina::~Pagina (){
+		#ifdef DEBUG
+			cout << "Destruindo pagina" << endl;
+		#endif
         Palavra *ptr = header;
         for(int i = 0; i < tamanhoVetor; i++){
 		    Palavra *aux = ptr->next;
@@ -43,8 +32,9 @@ Pagina::~Pagina (){
 /*
 Funcao que adiciona a palavra na lista de maneira ordenada
 @param palavra a ser inserida na pagina
+@param pagina da pagina a qual a palavra pertence
 */
-void Pagina::addPalavra (string palavra){
+void Pagina::addPalavra (string palavra, int pagina){
 		//Liga a nova palavra ao header e ao trailer se a lista estiver vazia
 		if (quantPalavras == 0){
 			Palavra *novo = new Palavra(palavra);
@@ -52,12 +42,13 @@ void Pagina::addPalavra (string palavra){
 			trailer->prev = novo;
 			novo->prev = header;
 			novo->next = trailer;
+			novo->pagina = pagina;
 			quantPalavras++;
 			
 		}
 		else {
 		///Adiciona a palavra na lista de maneira ordenada atraves do indice
-			addPalavraByIndex(palavra, sortIndex(palavra));
+			addPalavraByIndex(palavra, sortIndex(palavra), pagina);
 			quantPalavras++;
 		}
 		quantCaracteres += palavra.length();
@@ -99,8 +90,9 @@ int Pagina::sortIndex(string palavra){
 Funcao que adiciona a palavra na lista de maneira ordenada a partir do index consequente ao qual ela deve ser adicionada
 @param string palavra a ser inserida
 @param int index consequente ao de onde a palavra deve ser inserida
+@param int pagina da pagina a qual a palavra pertence
 */
-void Pagina::addPalavraByIndex (string palavra, int index){
+void Pagina::addPalavraByIndex (string palavra, int index, int pagina){
 	//Flag para se o indice for maior que a quantidade de palavras ou menor que o index, representando um erro
 	if (index > quantPalavras|| index < 0){
 		throw out_of_range("Index out of range");
@@ -113,7 +105,12 @@ void Pagina::addPalavraByIndex (string palavra, int index){
 		ptr = ptr->next;
 	}
 
-	if (ptr->prev->palavra == palavra){
+	/**
+	 * Se a palavra do index anterior ao ser adicionada for igual a palavra a ser adicionada e 
+	 * a pagina tambem for igual, vai simplesmente incrementar a quantidade de aparicoes da palavra
+	 * (evitando um acumulo desnecessario de nodos)
+	*/
+	if (ptr->prev->palavra == palavra && ptr->prev->pagina == pagina){
 		ptr->prev->quantPalavras++;
 		return;
 	}
@@ -127,27 +124,66 @@ void Pagina::addPalavraByIndex (string palavra, int index){
 	novo->prev = ptr->prev;
 	novo->next = ptr;
 	ptr->prev = novo;
+	novo->setPagina(pagina);
 	tamanhoVetor++;
-	#ifdef DEBUG
-	cerr << "palavra: " << ptr->palavra << endl;
-	#endif
 }
 
 /*
 Funcao que transforma todas palavras em uma string organizada
 @return string com todas palavras
 */
-string Pagina::imprimePalavras(){
+string Pagina::imprimePalavrasPagina(){
+
 	Palavra *ptr = header->next;
 	stringstream ss;
+	ss<<"------------------------------------------------"<<endl;
 	while (ptr != trailer){
-		ss << "|";
-		ss << ptr->palavra << "|";
+		ss << "| ";
+		ss << ptr->palavra << " |";
+		ss << " Pagina: ";
+		ss << ptr->pagina << " |";
 		ss << " Quantidade de Aparicoes: ";
 		ss << ptr->quantPalavras << endl;
 		ptr = ptr->next;
 	}
-	ss << endl;
-	ss << "Numero de caracteres: " << quantCaracteres << endl;
+	//ss << "Numero de caracteres: " << quantCaracteres << endl;
+	ss<<"------------------------------------------------"<<endl;
+	
 	return ss.str();
+}
+
+string Pagina::imprimePalavras(){
+	Palavra *ptr = header->next;
+	stringstream ss;
+	ss<<"------------------------------------------------"<<endl;
+	while (ptr != trailer){
+		ss << "| ";
+		ss << ptr->palavra << " |";
+		ss << " Quantidade de Aparicoes: ";
+		ss << ptr->quantPalavras << endl;
+		ptr = ptr->next;
+	}
+	//ss << "Numero de caracteres: " << quantCaracteres << endl;
+	ss<<"------------------------------------------------"<<endl;
+	ss<< "Tamanho Vetor: " << tamanhoVetor << endl;
+	return ss.str();
+}
+
+int Pagina::getTamanhoVetor(){
+	return tamanhoVetor;
+}
+string Pagina::getPalavra(int index){
+	Palavra *ptr = header->next;
+	for (int i = 0; i < index; i++){
+		ptr = ptr->next;
+	}
+	return ptr->palavra;
+}
+int Pagina::getNumero(int index){
+	Palavra *ptr = header->next;
+	for (int i = 0; i < index; i++){
+		ptr = ptr->next;
+	}
+	
+	return ptr->quantPalavras;
 }
