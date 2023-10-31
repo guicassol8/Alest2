@@ -136,36 +136,42 @@ string Pagina::imprimePalavrasPagina(){
 
 	Palavra *ptr = header->next;
 	stringstream ss;
-	ss<<"------------------------------------------------"<<endl;
-	while (ptr != trailer){
-		ss << "| ";
-		ss << ptr->palavra << " |";
-		ss << " Pagina: ";
-		ss << ptr->pagina << " |";
-		ss << " Quantidade de Aparicoes: ";
-		ss << ptr->quantPalavras << endl;
-		ptr = ptr->next;
+	int aux = 0;
+	ss << "-----------------------------------------------" << endl;
+	while (ptr->next != nullptr){
+		stringstream aparicoes;
+		stringstream paginas;
+		paginas << " Paginas: ";
+		aparicoes << "| Ocorrencias: ";
+		do{
+			paginas << ptr->pagina << " ";
+			aparicoes << ptr->quantPalavras << " ";
+			ptr = ptr->next;
+			aux += ptr->quantPalavras;
+		}while (ptr->prev->palavra == ptr->palavra);
+		ss << "| " << sortColor(ptr->prev->palavra, aux) << " |";
+		ss << endl << "|" << paginas.str() << " |"<< endl;
+		ss << aparicoes.str() << "|" << endl;
+		aux = 0;
 	}
-	//ss << "Numero de caracteres: " << quantCaracteres << endl;
-	ss<<"------------------------------------------------"<<endl;
-	
+	ss << "-----------------------------------------------" << endl;
 	return ss.str();
 }
 
 string Pagina::imprimePalavras(){
 	Palavra *ptr = header->next;
 	stringstream ss;
-	ss<<"------------------------------------------------"<<endl;
+	ss<<"------------------------------------------------" <<endl;
 	while (ptr != trailer){
 		ss << "| ";
-		ss << ptr->palavra << " |";
-		ss << " Quantidade de Aparicoes: ";
+		ss << sortColor(ptr->palavra, ptr->quantPalavras) << " |";
+		ss << " Quantidade de Ocorrencias: ";
 		ss << ptr->quantPalavras << endl;
 		ptr = ptr->next;
 	}
 	//ss << "Numero de caracteres: " << quantCaracteres << endl;
 	ss<<"------------------------------------------------"<<endl;
-	ss<< "Tamanho Vetor: " << tamanhoVetor << endl;
+	// ss<< "Tamanho Vetor: " << tamanhoVetor << endl;
 	return ss.str();
 }
 
@@ -179,11 +185,36 @@ string Pagina::getPalavra(int index){
 	}
 	return ptr->palavra;
 }
-int Pagina::getNumero(int index){
+int Pagina::getOcorrencia(int index){
 	Palavra *ptr = header->next;
 	for (int i = 0; i < index; i++){
 		ptr = ptr->next;
 	}
 	
 	return ptr->quantPalavras;
+}
+
+string sortColor (string palavra, int aparicao){
+	stringstream ss;
+	if (aparicao < 10){
+		ss << GREEN << palavra << RESET;
+		return ss.str();
+	}
+	if (aparicao < 20){
+		ss << YELLOW << palavra << RESET;
+		return ss.str();
+	}
+	if (aparicao < 30){
+		ss << ORANGE << palavra << RESET;
+		return ss.str();
+	}
+	ss << RED << palavra << RESET;
+	return ss.str();
+}
+int Pagina::getPagina(int index){
+	Palavra *ptr = header->next;
+	for (int i = 0; i < index; i++){
+		ptr = ptr->next;
+	}
+	return ptr->pagina;
 }
